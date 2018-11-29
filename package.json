@@ -1,6 +1,6 @@
 {
-  "name": "swagger-stats",
-  "version": "0.95.6",
+  "name": "swagger-stats-lions",
+  "version": "0.0.1",
   "description": "API Telemetry and APM. Trace API calls and Monitor API performance, health and usage statistics in Node.js Microservices, based on express routes and Swagger (Open API) specification",
   "main": "lib/index.js",
   "scripts": {
@@ -48,6 +48,7 @@
     "basic-auth": "^2.0.0",
     "cookies": "^0.7.1",
     "debug": "^3.1.0",
+    "fs": "0.0.1-security",
     "moment": "^2.19.3",
     "path-to-regexp": "^2.1.0",
     "prom-client": "^11.0.0",

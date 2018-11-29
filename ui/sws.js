@@ -20,9 +20,6 @@
                             <span class="icon-bar"></span> \
                             <span class="icon-bar"></span> \
                         </button> \
-                        <a class="navbar-brand" href="http://swaggerstats.io" target="_blank" data-toggle="tooltip" title="swaggerstats.io">\
-                            <span class="sws-logo">{<i class="fa fa-signal"></i>}<span class="sws-logo-title">swagger-stats</span></span>\
-                        </a> \
                     </div> \
                     <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 0.555556px;"> \
                         <ul id="sws-toolbar" class="nav navbar-nav"> \

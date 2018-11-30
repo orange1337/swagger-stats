@@ -85,7 +85,7 @@ var SWSLayout = function(){
                         sws_summ_cCpu  : {
                             class:"col-lg-12",
                             type: "chart",
-                            options: { title:'CPU Usage % over last 60 minutes', type: 'line', height:"240px" },
+                            options: { title:'CPU Usage %', type: 'line', height:"240px" },
                             chartdata: {
                                 labels: [],
                                 datasets: [
@@ -164,7 +164,7 @@ var SWSLayout = function(){
                         sws_summ_cTl  : {
                             class:"col-lg-12",
                             type: "chart",
-                            options: { title:'Request and Responses over last 60 minutes', type: 'bar', height:"260px" },
+                            options: { title:'Request and Responses', type: 'bar', height:"260px" },
                             chartdata: {
                                 labels: [],
                                 // #5eb5ec, #d0e2f0, #fcd986, #fd8b96

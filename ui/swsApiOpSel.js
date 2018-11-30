@@ -88,6 +88,9 @@
     SWSApiOpSel.prototype.getvalue = function(res) {
         if(typeof res !== 'object') return;
         var val = this.$element.find(".sws-chosen-select").val();
+        if (!val){
+            return console.error('error getvalue sws-chosen-select', val);
+        }
         var vals = val.split(',',2);
         if(vals.length==2) {
             res.method = vals[0];

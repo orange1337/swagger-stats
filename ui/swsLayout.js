@@ -56,22 +56,25 @@ var SWSLayout = function(){
                 },
                 r1: {
                     columns: {
-                        sws_summ_wRq  : { class:"col-md-2", type: "widget", title: 'Requests', subtitle:'Total requests received' },
+                        sws_summ_wRqTotal  : { class:"col-md-2", type: "widget", title: 'Requests Total', subtitle:'Total requests received' },
+                        sws_summ_wRq  : { class:"col-md-2", type: "widget", title: 'Requests Last', subtitle:'Requests from Last reload' },
                         //sws_summ_wRp  : { class:"col-md-2", type: "widget", title: 'Processing', subtitle:'Requests in processing' },
-                        sws_summ_wApd  : { class:"col-md-2", type: "widget", title: 'Apdex Score', subtitle:'Overall Apdex Score', postProcess:'successIfNonZero' },
+                        //sws_summ_wApd  : { class:"col-md-2", type: "widget", title: 'Apdex Score', subtitle:'Overall Apdex Score', postProcess:'successIfNonZero' },
                         sws_summ_wRRte: { class:"col-md-2", type: "widget", title: 'Current Req Rate', subtitle:'Req rate on last time interval', postProcess:'successIfNonZero' },
                         sws_summ_wERte: { class:"col-md-2", type: "widget", title: 'Current Err Rate', subtitle:'Err rate on last time interval', postProcess:'redIfNonZero' },
-                        sws_summ_wCpu:  { class:"col-md-2", type: "widget", title: 'CPU Usage', subtitle:'Process CPU Usage %', postProcess:'redIfNonZero' },
-                        sws_summ_wMem:  { class:"col-md-2", type: "widget", title: 'Memory Usage', subtitle:'Used Heap', postProcess:'redIfNonZero' },
+                        sws_summ_wCpu:  { class:"col-md-2", type: "widget", title: 'Process CPU Usage', subtitle:'usage %', postProcess:'redIfNonZero' },
+                        sws_summ_wCpuSystem:  { class:"col-md-2", type: "widget", title: 'System CPU Usage', subtitle:'usage %', postProcess:'redIfNonZero' },
                         //sws_summ_wMHt : { class:"col-md-2", type: "widget", title: 'Max HT', subtitle:'Longest Req of all time' }
                     }
                 },
                 r2: {
                     columns: {
+                        sws_summ_wMem:  { class:"col-md-2", type: "widget", title: 'Memory Usage', subtitle:'Used Heap', postProcess:'redIfNonZero' },
+                        sws_summ_wMemSystem:  { class:"col-md-2", type: "widget", title: 'System Memory Usage', subtitle:'usage GB', postProcess:'redIfNonZero' },
                         //sws_summ_wRs  : { class:"col-md-2", type: "widget", title: 'Responses', subtitle:'Total responses sent' },
                         sws_summ_wErr : { class:"col-md-2", type: "widget", title: 'Errors', subtitle:'Total Error Responses', postProcess:'redIfNonZero' },
-                        sws_summ_wSs  : { class:"col-md-2", type: "widget", title: 'Success', subtitle:'Success Responses', postProcess:'successIfNonZero' },
-                        sws_summ_wRed : { class:"col-md-2", type: "widget", title: 'Redirect', subtitle:'Redirect Responses' },
+                        //sws_summ_wSs  : { class:"col-md-2", type: "widget", title: 'Success', subtitle:'Success Responses', postProcess:'successIfNonZero' },
+                        //sws_summ_wRed : { class:"col-md-2", type: "widget", title: 'Redirect', subtitle:'Redirect Responses' },
                         sws_summ_wCe  : { class:"col-md-2", type: "widget", title: 'Client Error', subtitle:'Client Error Responses', postProcess:'redIfNonZero' },
                         sws_summ_wSe  : { class:"col-md-2", type: "widget", title: 'Server Error', subtitle:'Server Error Responses', postProcess:'redIfNonZero' },
                         sws_summ_wAHt : { class:"col-md-2", type: "widget", title: 'Avg HT', subtitle:'Average Handle Time' }
@@ -82,17 +85,20 @@ var SWSLayout = function(){
                         sws_summ_cCpu  : {
                             class:"col-lg-12",
                             type: "chart",
-                            options: { title:'CPU Usage % over last 60 minutes', type: 'line', height:"140px" },
+                            options: { title:'CPU Usage % over last 60 minutes', type: 'line', height:"240px" },
                             chartdata: {
                                 labels: [],
                                 datasets: [
-                                    { label: "CPU", borderColor: '#FCE38A', backgroundColor: '#FCE38A',data: [] }
+                                    { label: "CPU System", borderColor: '#ffe27b', backgroundColor: '#ffe27b', fill:false, data: [] },
+                                    { label: "CPU Process", borderColor: '#7be3d3', backgroundColor: '#7be3d3', fill:false, data: [] }
                                 ]
                             },
                             chartoptions : {
                                 responsive: true,
                                 maintainAspectRatio: false,
-                                legend: { display: false },
+                                tooltips: { mode: 'index', intersect: false },
+                                hover: { mode: 'nearest', intersect: true },
+                                //legend: { display: false },
                                 scales: { xAxes: [],
                                           yAxes: [{ ticks: {
                                             callback: function(value, index, values) { return value.toFixed(1)+' %';}
@@ -158,7 +164,7 @@ var SWSLayout = function(){
                         sws_summ_cTl  : {
                             class:"col-lg-12",
                             type: "chart",
-                            options: { title:'Request and Responses over last 60 minutes', type: 'bar', height:"360px" },
+                            options: { title:'Request and Responses over last 60 minutes', type: 'bar', height:"260px" },
                             chartdata: {
                                 labels: [],
                                 // #5eb5ec, #d0e2f0, #fcd986, #fd8b96

@@ -36,8 +36,8 @@
         footer:'<footer class="sws-footer bd-footer text-muted"> \
                     <div class="container-fluid"> \
                         <p class="sws-tc">Data since <span class="label label-medium sws-uptime"></span> starting from <span class="label label-medium sws-time-from"></span> updated at <span class="label label-medium sws-time-now"></span></p> \
-                        <p><a href="http://swaggerstats.io" target="_blank"><strong> swagger-stats v.0.95.6</strong></a></p> \
-                        <p>&copy; 2017-2018 <a href="#">slana.tech</a></p> \
+                        <p><a href="https://www.npmjs.com/package/swagger-stats-lions" target="_blank"><strong> swagger-stats-lions v0.0.2</strong></a></p> \
+                        <p>&copy; 2018 <a href="https://github.com/orange1337">orange1337</a></p> \
                     </div> \
                 </footer>'
     };
@@ -66,7 +66,7 @@
         this.activePageContext = null;
 
         // Auto-refresh interval, 60 seconds by default
-        this.refreshInterval = 60;
+        this.refreshInterval = 2;
         this.refreshIntervalId = null;
 
         // Allow to specify/override base path for swagger-stats API
@@ -304,9 +304,10 @@
         elemRefresh.append($('<span class="sws-refresh sws-refreshing fa fa-refresh" interval="0"></span>'));
         elemRefresh.append($('<span class="sws-refresh sws-pauseresume fa fa-pause" interval="-1"></span>'));
         elemRefresh.append($('<span class="sws-refresh label label-transparent" interval="1">1s</span>'));
+        elemRefresh.append($('<span class="sws-refresh label label-primary" interval="2">2s</span>'));
         elemRefresh.append($('<span class="sws-refresh label label-transparent" interval="10">10s</span>'));
         elemRefresh.append($('<span class="sws-refresh label label-transparent" interval="30">30s</span>'));
-        elemRefresh.append($('<span class="sws-refresh label label-primary" interval="60">1m</span>'));
+        elemRefresh.append($('<span class="sws-refresh label label-transparent" interval="60">1m</span>'));
         elemNavCtrls.append(elemRefresh);
 
         var time = moment(Date.now()).format();
@@ -864,6 +865,7 @@
         var that = this;
 
         // Update Widgets
+        $('#sws_summ_wRqTotal').swswidget('setvalue', { value:this.apistats.all.requestsTotal, trend: this.getTimelineTrend('stats','requestsTotal')} );
         $('#sws_summ_wRq').swswidget('setvalue', { value:this.apistats.all.requests, trend: this.getTimelineTrend('stats','requests')} );
         //$('#sws_summ_wRp').swswidget('setvalue', { value:(this.apistats.all.requests-this.apistats.all.responses) } );
 
@@ -882,7 +884,15 @@
             elemTrend.append($('<div class="swsbox-trend-container"><span class="pie">'+cpu1+'/100</span></div>'));
             elemTrend.find('.pie').peity("donut",{ fill: ["#ff9900", "#e7eaec"], radius:30, innerRadius: 16 });
         }});
+
+        $('#sws_summ_wCpuSystem').swswidget('setvalue',  { value: this.apistats.sys.cpuServer.toFixed(2)+' %', customtrend: function(elemTrend){
+            var cpu1 = that.apistats.sys.cpuServer, cpu2 = 100 - that.apistats.sys.cpuServer;
+            elemTrend.append($('<div class="swsbox-trend-container"><span class="pie">'+cpu1+'/100</span></div>'));
+            elemTrend.find('.pie').peity("donut",{ fill: ["#ff9900", "#e7eaec"], radius:30, innerRadius: 16 });
+        }});
+
         $('#sws_summ_wMem').swswidget('setvalue',  { value: this.formatBytes(this.apistats.sys.heapUsed,2)});
+        $('#sws_summ_wMemSystem').swswidget('setvalue',  { value: this.formatBytes(this.apistats.sys.memorySystem,2)});
 
 
         $('#sws_summ_wErr').swswidget('setvalue', { value:this.apistats.all.errors, total: this.apistats.all.requests, trend: this.getTimelineTrend('stats','errors')} );
@@ -899,7 +909,7 @@
 
         // Update CPU chart
         var elemCPUChart = $('#sws_summ_cCpu');
-        this.buildTimeSeriesChartData(elemCPUChart.swschart('getchartdata'),'sys',['cpu']);
+        this.buildTimeSeriesChartData(elemCPUChart.swschart('getchartdata'),'sys',['cpuServer', 'cpu']);
         elemCPUChart.swschart('update');
 
         // Update Memory chart - TEMP
